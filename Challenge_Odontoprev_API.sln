@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34928.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Challenge_Odontoprev_API", "Challenge_Odontoprev_API\Challenge_Odontoprev_API.csproj", "{3C009977-AE23-414A-B54A-BB9B73881CEC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C009977-AE23-414A-B54A-BB9B73881CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C009977-AE23-414A-B54A-BB9B73881CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C009977-AE23-414A-B54A-BB9B73881CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C009977-AE23-414A-B54A-BB9B73881CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1039668-B675-460A-BA9C-9C25BA1F623E}
+	EndGlobalSection
+EndGlobal
