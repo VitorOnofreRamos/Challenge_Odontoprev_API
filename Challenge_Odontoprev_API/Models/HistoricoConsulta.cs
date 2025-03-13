@@ -2,7 +2,7 @@
 
 public class HistoricoConsulta : _BaseEntity
 {
-    public long ID_Consulta { get; set; }
+    public long Id_Consulta { get; set; }
     public Consulta Consulta { get; set; }
     public DateTime Data_Atendimento { get; set; }
     public string Motivo_Consulta { get; set; }
