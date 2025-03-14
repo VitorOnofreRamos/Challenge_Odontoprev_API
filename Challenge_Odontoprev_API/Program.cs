@@ -16,20 +16,19 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 builder.Services.AddScoped(typeof(_IRepository<>), typeof(_Repository<>));
 
-builder.Services.AddScoped<_IService, _IService>();
+builder.Services.AddScoped<_IService, _Service>();
 
-//builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Odonto Care API", Version = "1.0.0" });
 
-    //c.EnableAnnotations(); // Para suporte a XML comments
+    c.EnableAnnotations();
 
-    //// Configuração do arquivo XML de documentação
-    //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    //c.IncludeXmlComments(xmlPath);
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
 
 var app = builder.Build();
@@ -40,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dental Clinic API v1.0.0");
         c.RoutePrefix = "swagger";
     });
 }
