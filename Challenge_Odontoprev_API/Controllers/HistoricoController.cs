@@ -8,12 +8,12 @@ namespace Challenge_Odontoprev_API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class HistoricoConsultaController : ControllerBase
+public class HistoricoController : ControllerBase
 {
     private readonly _IRepository<HistoricoConsulta> _repository;
     private readonly IMapper _mapper;
 
-    public HistoricoConsultaController(_IRepository<HistoricoConsulta> repository, IMapper mapper)
+    public HistoricoController(_IRepository<HistoricoConsulta> repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
@@ -39,7 +39,7 @@ public class HistoricoConsultaController : ControllerBase
     public async Task<IActionResult> Create(HistoricoConsultaCreateDTO dto)
     {
         var historico = _mapper.Map<HistoricoConsulta>(dto);
-        await _repository.Create(historico);
+        await _repository.Insert(historico);
 
         return CreatedAtAction(
             nameof(GetById),

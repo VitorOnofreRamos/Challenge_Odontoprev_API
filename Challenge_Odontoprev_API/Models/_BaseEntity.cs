@@ -2,5 +2,5 @@
 
 public abstract class _BaseEntity
 {
-    public long Id { get; set; }
+    public virtual long Id { get; set; }
 }

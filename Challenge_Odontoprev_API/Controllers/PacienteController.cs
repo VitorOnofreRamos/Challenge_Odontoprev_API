@@ -39,7 +39,7 @@ public class PacienteController : ControllerBase
     public async Task<IActionResult> Create(PacienteCreateDTO dto)
     {
         var paciente = _mapper.Map<Paciente>(dto);
-        await _repository.Create(paciente);
+        await _repository.Insert(paciente);
 
         return CreatedAtAction(
             nameof(GetById), 

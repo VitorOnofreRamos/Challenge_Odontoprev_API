@@ -1,18 +1,22 @@
 using Microsoft.EntityFrameworkCore;
-using Challenge_Odontoprev_API.Data;
 using System.Reflection;
-using Challenge_Odontoprev_API.Mappings;
 using Challenge_Odontoprev_API.Repositories;
 using Challenge_Odontoprev_API.Services;
+using Challenge_Odontoprev_API.Infrastructure;
+using Challenge_Odontoprev_API.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDistributedMemoryCache();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped(typeof(_IRepository<>), typeof(_Repository<>));
 
@@ -26,9 +30,9 @@ builder.Services.AddSwaggerGen(c =>
 
     c.EnableAnnotations();
 
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
+    //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    //c.IncludeXmlComments(xmlPath);
 });
 
 var app = builder.Build();

@@ -10,7 +10,7 @@ public class DentistaCreateDTO
 
 public class DentistaReadDTO
 {
-    public long Id { get; set; }
+    public long ID { get; set; }
     public string Nome { get; set; }
     public string CRO { get; set; }
     public string Especialidade { get; set; }

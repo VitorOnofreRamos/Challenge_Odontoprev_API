@@ -39,7 +39,7 @@ public class ConsultaController : ControllerBase
     public async Task<IActionResult> Create(ConsultaCreateDTO dto)
     {
         var consulta = _mapper.Map<Consulta>(dto);
-        await _repository.Create(consulta);
+        await _repository.Insert(consulta);
 
         return CreatedAtAction(
             nameof(GetById),

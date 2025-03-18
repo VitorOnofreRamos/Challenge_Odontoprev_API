@@ -12,7 +12,7 @@ public class PacienteCreateDTO
 
 public class PacienteReadDTO
 {
-    public long Id { get; set; }
+    public long ID { get; set; }
     public string Nome { get; set; }
     public DateTime Data_Nascimento { get; set; }
     public string CPF { get; set; }

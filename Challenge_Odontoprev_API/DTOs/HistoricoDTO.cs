@@ -2,7 +2,7 @@
 
 public class HistoricoConsultaCreateDTO
 {
-    public long Id_Consulta { get; set; }
+    public long ID_Consulta { get; set; }
     public DateTime Data_Atendimento { get; set; }
     public string Motivo_Consulta { get; set; }
     public string Observacoes { get; set; }
@@ -10,8 +10,8 @@ public class HistoricoConsultaCreateDTO
 
 public class HistoricoConsultaReadDTO
 {
-    public long Id { get; set; }
-    public long Id_Consulta { get; set; }
+    public long ID { get; set; }
+    public long ID_Consulta { get; set; }
     public DateTime Data_Atendimento { get; set; }
     public string Motivo_Consulta { get; set; }
     public string Observacoes { get; set; }
