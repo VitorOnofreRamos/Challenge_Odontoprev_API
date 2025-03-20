@@ -1,8 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Challenge_Odontoprev_MVC.Application.DTOs.ConsultaReadDTO>
+@{
+    ViewData["Title"] = "Gestor de Consultas";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Checklist de Consultas</h1>
+
+<a asp-asp-controller="Consulta" asp-action="Create" class="btn btn-primary mt-2 mb-4">Criar nova Consulta</a>
+
+@Html.Partial("_AppointmentTable", Model)

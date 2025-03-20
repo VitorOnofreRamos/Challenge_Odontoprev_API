@@ -1,0 +1,30 @@
+﻿@using Challenge_Odontoprev_MVC.Models.Entities
+@model IEnumerable<Challenge_Odontoprev_MVC.Application.DTOs.ConsultaReadDTO>
+
+<div class="card">
+	<div class="card-body">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Data da Consulta</th>
+					<th>Status</th>
+					<th>Nome do Paciente</th>
+					<th>Nome do Dentista</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach(var itemConsulta in Model)
+				{
+					<tr>
+						<td>@itemConsulta.Data_Consulta.ToString("dd/MM/yyyy")</td>
+						<td>@itemConsulta.Status</td>
+						<td>@itemConsulta.ID_Paciente</td>
+						<td>@itemConsulta.ID_Dentista</td>
+						<td>Teste</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
