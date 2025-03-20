@@ -30,7 +30,11 @@ public class Consulta : _BaseEntity
     public string Status { get; set; }
 
     // Navegação
+    [ForeignKey(nameof(ID_Paciente))]
     public Paciente Paciente { get; set; }
+
+    [ForeignKey(nameof(ID_Dentista))]
     public Dentista Dentista { get; set; }
+    
     public ICollection<HistoricoConsulta> Historicos { get; set; }
 }

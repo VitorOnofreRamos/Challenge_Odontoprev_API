@@ -29,5 +29,6 @@ public class HistoricoConsulta : _BaseEntity
     public string Observacoes { get; set; }
 
     // Navegação
+    [ForeignKey(nameof(ID_Consulta))]
     public Consulta Consulta { get; set; }
 }
