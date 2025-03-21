@@ -72,12 +72,9 @@ http://localhost:5062/swagger
 4. Push para a branch
 5. Abra um Pull Request
 
-## Licença
-Este projeto está licenciado sob a **MIT License**.
-
 ## Integrates
-
 **Turma 2TDSPS**
-- Vitor Onofre Ramos | RM553241
-- Pedro Henrique | RM553801
-- Beatriz Silva | RM552600
+
+-Vitor Onofre Ramos | RM553241
+-Pedro Henrique | RM553801
+-Beatriz Silva | RM552600
