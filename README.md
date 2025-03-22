@@ -3,6 +3,8 @@
 ## Descrição
 A **Challenge Odontoprev API** é uma API REST desenvolvida em **ASP.NET Core 8.0** para gerenciar consultas odontológicas, dentistas, pacientes e histórico de atendimentos. Ela utiliza o **Entity Framework Core** com **Oracle** como banco de dados e implementa o **AutoMapper** para conversão de objetos.
 
+Todas as operações **CRUD** (Create, Read, Update, Delete) são executadas por meio de procedures **PL/SQL**, implementadas no banco de dados **Oracle**. Essas procedures estão disponíveis no repositório [Data-Base-Odontoprev](https://github.com/VitorOnofreRamos/Data-Base-Odontoprev).
+
 ## Tecnologias Utilizadas
 - **.NET 8.0**
 - **ASP.NET Core**
@@ -52,25 +54,50 @@ dotnet run
 ```
 A API estará disponível em `http://localhost:5062`
 
+## Instruções para o Banco de Dados Oracle
+Esse projeto realiza as operações **CRUD** através de procedures **PL/SQL**. As procedures estão contidas no arquivo `Pkg_Procedures_CRUD_Odontoprev` e são executadas através do Entity Framework Core, conforme demonstrado nas classes de repositório.
+Para consultar e utilizar as procedures, acesse o repositório [Data-Base-Odontoprev](https://github.com/VitorOnofreRamos/Data-Base-Odontoprev).
+
+**ATENÇÃO ⚠️: É de extrema importância que o usário execute os scripts na seguinte ordem antes de utilizar a API:**
+
+1. `PkgFunAuxiliares.sql` – Execute primeiro as funções auxiliares.
+
+2. `PkgFunValidacaoOdontoprev.sql` – Em seguida, execute as funções de validação.
+
+3. `PkgProceduresCRUDOdontoprev.sql` – Por fim, execute as procedures de CRUD.
+
+Esses passos garantem que todas as dependências e validações estejam corretamente configuradas no banco de dados, permitindo que a API realize as operações de forma adequada.
+
 ## Endpoints Disponíveis
 A documentação completa dos endpoints pode ser acessada via **Swagger**:
-```
-http://localhost:5062/swagger
-```
 
-### Exemplo de Endpoints
+### Endpoints de *Paciente*
 - **GET** `/api/paciente` - Lista todos os pacientes
 - **POST** `/api/paciente` - Cria um novo paciente
-- **GET** `/api/consulta/{id}` - Obtém uma consulta por ID
-- **PUT** `/api/consulta/{id}` - Atualiza uma consulta existente
-- **DELETE** `/api/dentista/{id}` - Remove um dentista
+- **GET** `/api/paciente/{id}` - Obtém um paciente por ID
+- **PUT** `/api/consulta/{id}` - Atualiza um paciente existente
+- **DELETE** `/api/dentista/{id}` - Remove um paciente
 
-## Contribuição
-1. Fork este repositório
-2. Crie uma branch (`feature/nova-funcionalidade`)
-3. Commit suas alterações
-4. Push para a branch
-5. Abra um Pull Request
+### Endpoints de *Dentista*
+- **GET** `/api/dentista` - Lista todos os pacientes
+- **POST** `/api/dentista` - Cria um novo paciente
+- **GET** `/api/dentista/{id}` - Obtém um paciente por ID
+- **PUT** `/api/dentista/{id}` - Atualiza um paciente existente
+- **DELETE** `/api/dentista/{id}` - Remove um paciente
+
+  ### Endpoints de *Consulta*
+- **GET** `/api/consulta` - Lista todos os pacientes
+- **POST** `/api/consulta` - Cria um novo paciente
+- **GET** `/api/consulta/{id}` - Obtém um paciente por ID
+- **PUT** `/api/consulta/{id}` - Atualiza um paciente existente
+- **DELETE** `/api/consulta/{id}` - Remove um paciente
+
+### Endpoints de *Historico_consulta*
+- **GET** `/api/historico` - Lista todos os pacientes
+- **POST** `/api/historico` - Cria um novo paciente
+- **GET** `/api/historico/{id}` - Obtém um paciente por ID
+- **PUT** `/api/historico/{id}` - Atualiza um paciente existente
+- **DELETE** `/api/historico/{id}` - Remove um paciente
 
 ## Integrates
 **Turma 2TDSPS**
