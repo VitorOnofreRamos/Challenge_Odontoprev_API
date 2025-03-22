@@ -13,6 +13,33 @@ Todas as operações **CRUD** (Create, Read, Update, Delete) são executadas por
 - **Swashbuckle/Swagger** (para documentação da API)
 - **Newtonsoft.Json**
 
+## Dependências
+O projeto utiliza as seguintes dependências, conforme definidas no arquivo de projeto (.csproj):
+
+- **Microsoft.AspNetCore.Mvc.NewtonsoftJson (v8.0.0)**
+    Suporte ao Newtonsoft.Json para formatação e serialização em controllers ASP.NET Core.
+
+- **Microsoft.EntityFrameworkCore.Design (v9.0.2)**
+    Ferramentas de design e migrações do Entity Framework Core (configurada com PrivateAssets).
+
+- **Microsoft.EntityFrameworkCore.Tools (v9.0.2)**
+    Ferramentas de linha de comando para o Entity Framework Core (também com PrivateAssets).
+
+- **Oracle.EntityFrameworkCore (v9.23.60)**
+    Provider do Entity Framework Core para conexão com bancos de dados Oracle.
+
+- **AutoMapper.Extensions.Microsoft.DependencyInjection (v12.0.1)**
+    Integração do AutoMapper com a injeção de dependência do ASP.NET Core.
+
+- **Newtonsoft.Json (v13.0.3)**
+    Biblioteca para manipulação de JSON.
+
+- **Swashbuckle.AspNetCore (v7.3.1)**
+    Geração da documentação Swagger para a API.
+
+- **Swashbuckle.AspNetCore.Annotations (v7.3.1)**
+    Suporte a anotações adicionais para melhorar a documentação Swagger.
+
 ## Estrutura do Projeto
 ```
 Challenge_Odontoprev_API/
@@ -102,6 +129,6 @@ A documentação completa dos endpoints pode ser acessada via **Swagger**:
 ## Integrates
 **Turma 2TDSPS**
 
--Vitor Onofre Ramos | RM553241
--Pedro Henrique | RM553801
--Beatriz Silva | RM552600
+- Vitor Onofre Ramos | RM553241
+- Pedro Henrique | RM553801
+- Beatriz Silva | RM552600
