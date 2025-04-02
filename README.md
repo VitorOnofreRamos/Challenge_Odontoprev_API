@@ -112,7 +112,7 @@ A documentação completa dos endpoints pode ser acessada via **Swagger**:
 - **PUT** `/api/dentista/{id}` - Atualiza um paciente existente
 - **DELETE** `/api/dentista/{id}` - Remove um paciente
 
-  ### Endpoints de *Consulta*
+### Endpoints de *Consulta*
 - **GET** `/api/consulta` - Lista todos os pacientes
 - **POST** `/api/consulta` - Cria um novo paciente
 - **GET** `/api/consulta/{id}` - Obtém um paciente por ID
