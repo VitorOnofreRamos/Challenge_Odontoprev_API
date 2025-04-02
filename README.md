@@ -85,7 +85,7 @@ A API estará disponível em `http://localhost:5062`
 Esse projeto realiza as operações **CRUD** através de procedures **PL/SQL**. As procedures estão contidas no arquivo `Pkg_Procedures_CRUD_Odontoprev` e são executadas através do Entity Framework Core, conforme demonstrado nas classes de repositório.
 Para consultar e utilizar as procedures, acesse o repositório [Data-Base-Odontoprev](https://github.com/VitorOnofreRamos/Data-Base-Odontoprev).
 
-**ATENÇÃO ⚠️: É de extrema importância que o usário execute os scripts na seguinte ordem antes de utilizar a API:**
+**ATENÇÃO ⚠️: É de extrema importância que o usuário execute os scripts na seguinte ordem antes de utilizar a API:**
 
 1. `PkgFunAuxiliares.sql` – Execute primeiro as funções auxiliares.
 
