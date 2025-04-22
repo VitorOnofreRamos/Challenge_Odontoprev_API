@@ -1,10 +1,13 @@
-namespace Challenge_Odontoprev_API.Repositories;
+namespace Challenge_Odontoprev_API.Repositories.MongoDBRepository;
 
-public class MongoEnderecoRepository
+using Challenge_Odontoprev_API.Models.MongoDBModel;
+using MongoDB.Driver;
+
+public class EnderecoRepository
 {
     private readonly IMongoCollection<Endereco> _enderecos;
 
-    public MongoEnderecoRepository(IMongoDatabase database)
+    public EnderecoRepository(IConfiguration configuration)
     {
         var client = new MongoClient(configuration.GetConnectionString("MongoConnection"));
         var database = client.GetDatabase("Mongo_OdontoCare");

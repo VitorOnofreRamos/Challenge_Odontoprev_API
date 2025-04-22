@@ -7,10 +7,10 @@ namespace Challenge_Odontoprev_API.Repositories;
 
 public class _Repository<T> : _IRepository<T> where T : _BaseEntity
 {
-    protected readonly ApplicationDbContext _context;
+    protected readonly ApplicationOracleDbContext _context;
     private readonly DbSet<T> _entities;
 
-    public _Repository(ApplicationDbContext context)
+    public _Repository(ApplicationOracleDbContext context)
     {
         _context = context;
         _entities = context.Set<T>();

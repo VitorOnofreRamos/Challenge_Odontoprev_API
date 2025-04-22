@@ -3,16 +3,13 @@ using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Challenge_Odontoprev_API.Models;
+namespace Challenge_Odontoprev_API.Models.MongoDBModel;
 
 public class Endereco
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
-
-    [BsonElement("cep")]
-    public string Cep { get; set; }
 
     [BsonElement("logradouro")]
     public string Logradouro { get; set; }

@@ -5,11 +5,11 @@ namespace Challenge_Odontoprev_API.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly ApplicationDbContext _context;
+    private readonly ApplicationOracleDbContext _context;
 
     public _IRepository<_BaseEntity> _IRepository { get; private set; }
 
-    public UnitOfWork(ApplicationDbContext context)
+    public UnitOfWork(ApplicationOracleDbContext context)
     {
         _context = context;
 
