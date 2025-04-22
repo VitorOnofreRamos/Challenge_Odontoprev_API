@@ -5,7 +5,10 @@ namespace Challenge_Odontoprev_API.Infrastructure;
 
 public interface IUnitOfWork : IDisposable
 {
-    _IRepository<_BaseEntity> _IRepository { get; }
-
+    _IRepository<Paciente> Pacientes { get; }
+    _IRepository<Dentista> Dentistas { get; }
+    _IRepository<Consulta> Consultas { get; }
+    _IRepository<HistoricoConsulta> Historicos { get; }
+    
     Task<int> CompleteAsync();
 }

@@ -7,22 +7,26 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationOracleDbContext _context;
 
-    public _IRepository<_BaseEntity> _IRepository { get; private set; }
+    public _IRepository<Paciente> Pacientes { get; }
+    public _IRepository<Dentista> Dentistas { get; }
+    public _IRepository<Consulta> Consultas { get; }
+    public _IRepository<HistoricoConsulta> Historicos { get; }
 
-    public UnitOfWork(ApplicationOracleDbContext context)
+    public UnitOfWork(
+        ApplicationOracleDbContext context,
+        _IRepository<Paciente> pacientes,
+        _IRepository<Dentista> dentistas,
+        _IRepository<Consulta> consultas,
+        _IRepository<HistoricoConsulta> historicos)
     {
         _context = context;
-
-        _IRepository = new _Repository<_BaseEntity>(_context);
+        Pacientes = pacientes;
+        Dentistas = dentistas;
+        Consultas = consultas;
+        Historicos = historicos;
     }
 
-    public async Task<int> CompleteAsync()
-    {
-        return await _context.SaveChangesAsync();
-    }
+    public Task<int> CompleteAsync() => _context.SaveChangesAsync();
 
-    public void Dispose()
-    {
-        _context.Dispose();
-    }
+    public void Dispose() => _context.Dispose();
 }

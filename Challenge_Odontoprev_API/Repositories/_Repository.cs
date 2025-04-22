@@ -16,8 +16,8 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
         _entities = context.Set<T>();
     }
 
-    public async Task<T> GetById(long id)
-    => await _entities.FindAsync(id) ?? throw new KeyNotFoundException($"Entity with id {id} not found.");
+    public async Task<T?> GetById(long id)
+        => await _entities.FindAsync(id);
 
     public async Task<IEnumerable<T>> GetAll()
         => await _entities.ToListAsync();

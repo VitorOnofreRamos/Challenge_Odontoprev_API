@@ -1,4 +1,6 @@
 ﻿using Challenge_Odontoprev_API.Models;
+using Challenge_Odontoprev_API.Models.MongoDBModel;
+using Challenge_Odontoprev_API.Repositories.MongoDBRepository;
 using Challenge_Odontoprev_API.Repositories;
 using Challenge_Odontoprev_API.Services.APIs;
 using Microsoft.AspNetCore.Mvc;
@@ -14,22 +16,44 @@ public class PacienteController : ControllerBase
     private readonly _IRepository<Paciente> _repository;
     private readonly IMapper _mapper;
     private readonly IEnderecoService _enderecoService;
+    private readonly EnderecoRepository _enderecoRepository;
 
     public PacienteController(
         _IRepository<Paciente> repository, 
         IMapper mapper,
-        IEnderecoService enderecoService)
+        IEnderecoService enderecoService,
+        EnderecoRepository _enderecoRepository)
     {
         _repository = repository;
         _mapper = mapper;
         _enderecoService = enderecoService;
+        _enderecoRepository = _enderecoRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
         var pacientes = await _repository.GetAll();
-        return Ok(_mapper.Map<IEnumerable<PacienteReadDTO>>(pacientes));
+        var listDto = new List<PacienteReadDTO>();
+
+        foreach (var p in pacientes)
+        {
+            var dto = _mapper.Map<PacienteReadDTO>(p);
+            var endereco = await _enderecoRepository.GetByIdAsync(p.IdEndereco);
+            if (endereco != null)
+            {
+                dto.Logradouro = endereco.Logradouro;
+                dto.Numero = endereco.Numero;
+                dto.Complemento = endereco.Complemento;
+                dto.Bairro = endereco.Bairro;
+                dto.Cidade = endereco.Cidade;
+                dto.Estado = endereco.Estado;
+                dto.Cep = endereco.Cep;
+            }
+            listDto.Add(dto);
+        }
+
+        return Ok(listDto);
     }
 
     [HttpGet("{id}")]
@@ -38,27 +62,68 @@ public class PacienteController : ControllerBase
         var paciente = await _repository.GetById(id);
         if (paciente == null)
             return NotFound();
-        return Ok(_mapper.Map<PacienteReadDTO>(paciente));
+
+        var dto = _mapper.Map<PacienteReadDTO>(paciente);
+        var endereco = await _enderecoRepository.GetByIdAsync(paciente.IdEndereco);
+        if (endereco != null)
+        {
+            dto.Logradouro = endereco.Logradouro;
+            dto.Numero = endereco.Numero;
+            dto.Complemento = endereco.Complemento;
+            dto.Bairro = endereco.Bairro;
+            dto.Cidade = endereco.Cidade;
+            dto.Estado = endereco.Estado;
+            dto.Cep = endereco.Cep;
+        }
+
+        return Ok(dto);
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(PacienteCreateDTO dto)
     {
         //Validar o CEP e endereço antes de persistir
-        if (!string.IsNullOrEmpty(dto.CEP))
+        if (!string.IsNullOrEmpty(dto.Cep))
         {
-            var enderecoResponse = await _enderecoService.ValidarEnderecoAsync(dto.CEP, dto.Endereco);
-            if (!enderecoResponse)
-                return BadRequest(new { Mensagem = "O endereco fornecido não é valido para o CEP informado." });
+            var enderecoStr = $"{dto.Logradouro}, {dto.Numero}, {dto.Complemento}, {dto.Bairro}, {dto.Cidade}/{dto.Estado}";
+            if (!await _enderecoService.ValidarEnderecoAsync(dto.Cep, enderecoStr))
+                return BadRequest(new { Mensagem = "O Endereço inválido para o CEP informado." });
         }
 
+        //Criar e salvar documento no de Endereco no MongoDB
+        var endereco = new Endereco
+        {
+            Logradouro = dto.Logradouro,
+            Numero = dto.Numero,
+            Complemento = dto.Complemento,
+            Bairro = dto.Bairro,
+            Cidade = dto.Cidade,
+            Estado = dto.Estado,
+            Cep = dto.Cep
+        };
+        var enderecoCriado = await _enderecoRepository.CreateAsync(endereco);
+
+        // Mapear o Paciente e atribuir o IdEndereco retornado
         var paciente = _mapper.Map<Paciente>(dto);
+        paciente.IdEndereco = enderecoCriado.Id;
+
+        // Persistir paciente no Oracle
         await _repository.Insert(paciente);
+
+        // Rertorna DTO Completo
+        var readDto = _mapper.Map<PacienteReadDTO>(paciente);
+        readDto.Logradouro  = enderecoCriado.Logradouro;
+        readDto.Numero      = enderecoCriado.Numero;
+        readDto.Complemento = enderecoCriado.Complemento;
+        readDto.Bairro      = enderecoCriado.Bairro;
+        readDto.Cidade      = enderecoCriado.Cidade;
+        readDto.Estado      = enderecoCriado.Estado;
+        readDto.Cep         = enderecoCriado.Cep;
 
         return CreatedAtAction(
             nameof(GetById), 
             new { id = paciente.Id}, 
-            _mapper.Map<PacienteReadDTO>(paciente)
+            readDto
         );
     }
 
@@ -70,11 +135,11 @@ public class PacienteController : ControllerBase
             return NotFound();
 
         //Validar o CEP e endereço antes de persistir
-        if (!string.IsNullOrEmpty(dto.CEP))
+        if (!string.IsNullOrEmpty(dto.Cep))
         {
-            var enderecoResponse = await _enderecoService.ValidarEnderecoAsync(dto.CEP, dto.Endereco);
-            if (!enderecoResponse)
-                return BadRequest(new { Mensagem = "O endereco fornecido não é valido para o CEP informado." });
+            var enderecoStr = $"{dto.Logradouro}, {dto.Numero}, {dto.Complemento}, {dto.Bairro}, {dto.Cidade}/{dto.Estado}";
+            if (!await _enderecoService.ValidarEnderecoAsync(dto.Cep, enderecoStr))
+                return BadRequest(new { Mensagem = "O Endereço inválido para o CEP informado." });
         }
 
         _mapper.Map(dto, existingPaciente);
@@ -88,28 +153,5 @@ public class PacienteController : ControllerBase
     {
         await _repository.Delete(id);
         return NoContent();
-    }
-
-    // Endpoint adicional para consultar endereço por CEP
-    [HttpGet("consultar-cep/{cep}")]
-    public async Task<IActionResult> ConsultarEnderecoPorCep(string cep)
-    {
-        try
-        {
-            var resultado = await _enderecoService.ConsultarCepAsync(cep);
-            if (resultado.Erro)
-            {
-                return NotFound(new { Mensagem = "CEP não encontrado." });
-            }
-            return Ok(resultado);
-        }
-        catch (ArgumentException ex)
-        {
-            return BadRequest(new { Mensagem = "O CEP fornecido é inválido." });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { Mensagem = "Ocorreu um erro interno ao processar a solicitação." });
-        }
     }
 }

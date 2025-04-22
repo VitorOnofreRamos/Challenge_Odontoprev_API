@@ -22,21 +22,21 @@ public class ApplicationOracleDbContext : DbContext
             .Property(c => c.Id)
             .HasDefaultValueSql("SEQ_PACIENTE.NEXTVAL");
 
-        modelBuilder.HasSequence<long>("SEQ_CONSULTA")
+        modelBuilder.HasSequence<long>("SEQ_DENTISTA")
             .StartsAt(1)
             .IncrementsBy(1);
 
         modelBuilder.Entity<Dentista>()
             .Property(c => c.Id)
-            .HasDefaultValueSql("SEQ_CONSULTA.NEXTVAL");
+            .HasDefaultValueSql("SEQ_DENTISTA.NEXTVAL");
 
-        modelBuilder.HasSequence<long>("SEQ_DENTISTA")
+        modelBuilder.HasSequence<long>("SEQ_CONSULTA")
             .StartsAt(1)
             .IncrementsBy(1);
 
         modelBuilder.Entity<Consulta>()
             .Property(c => c.Id)
-            .HasDefaultValueSql("SEQ_DENTISTA.NEXTVAL");
+            .HasDefaultValueSql("SEQ_CONSULTA.NEXTVAL");
 
         modelBuilder.HasSequence<long>("SEQ_HISTORICO")
             .StartsAt(1)

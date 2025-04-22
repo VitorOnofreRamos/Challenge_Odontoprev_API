@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Challenge_Odontoprev_API.Repositories;
+using Challenge_Odontoprev_API.Repositories.MongoDBRepository;
 using Challenge_Odontoprev_API.Services;
 using Challenge_Odontoprev_API.Services.APIs;
 using Challenge_Odontoprev_API.Services.APIs.ResponseModel;
