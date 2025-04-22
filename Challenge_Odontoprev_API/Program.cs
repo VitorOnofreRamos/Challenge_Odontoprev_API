@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Challenge_Odontoprev_API.Repositories;
 using Challenge_Odontoprev_API.Services;
+using Challenge_Odontoprev_API.Services.APIs;
+using Challenge_Odontoprev_API.Services.APIs.ResponseModel;
 using Challenge_Odontoprev_API.Infrastructure;
 using Challenge_Odontoprev_API.Mappings;
 
@@ -23,6 +25,10 @@ builder.Services.AddScoped(typeof(_IRepository<>), typeof(_Repository<>));
 builder.Services.AddScoped<_IService, _Service>();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
+
+// Registro do HttpClient para o serviço ViaCep
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IEnderecoService, ViaCepService>();
 
 builder.Services.AddSwaggerGen(c =>
 {
