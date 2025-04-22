@@ -28,7 +28,7 @@ public class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Dentista>()
             .Property(c => c.Id)
-            .HasDefaultValueSql("SEQ_DENTISTA.NEXTVAL");
+            .HasDefaultValueSql("SEQ_CONSULTA.NEXTVAL");
 
         modelBuilder.HasSequence<long>("SEQ_DENTISTA")
             .StartsAt(1)
