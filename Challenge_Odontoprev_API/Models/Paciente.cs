@@ -25,11 +25,6 @@ public class Paciente : _BaseEntity
     public string CPF { get; set; }
 
     [Required]
-    [StringLength(200)]
-    [Column("ENDERECO")]
-    public string Endereco { get; set; }
-
-    [Required]
     [StringLength(20)]
     [Column("TELEFONE")]
     public string Telefone { get; set; }
@@ -37,6 +32,10 @@ public class Paciente : _BaseEntity
     [Required]
     [Column("CARTEIRINHA")]
     public long Carteirinha { get; set; }
+
+    [Required]
+    [Column("ID_ENDERECO")]
+    public string IdEndereco { get; set; }
 
     public ICollection<Consulta> Consultas { get; set; }
 }

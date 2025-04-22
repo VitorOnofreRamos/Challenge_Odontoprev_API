@@ -50,13 +50,34 @@ public class ViaCepService : IEnderecoService
 
             return new EnderecoViaCepResponse { Erro = true };
         } 
-        catch (HttpRequestException ex)
+        catch (Exception)
         {
             return new EnderecoViaCepResponse { Erro = true };
         }
-        catch (JsonException ex)
-        {
-            return new EnderecoViaCepResponse { Erro = true };
-        }
+    }
+
+    public async Task<bool> ValidarEnderecoAsync(string cep, string endereco)
+    {
+        if (string.IsNullOrEmpty(cep) || string.IsNullOrEmpty(endereco)) return false;
+
+        var enderecoViaCep = await ConsultarCepAsync(cep);
+        
+        if (enderecoViaCep.Erro) return false;
+
+        // Verificação se o endereço fornecido contém os elementos principais retornados pela API
+        bool contiemLogradouro = !string.IsNullOrEmpty(enderecoViaCep.Logradouro) && 
+                                endereco.Contains(enderecoViaCep.Logradouro, StringComparison.OrdinalIgnoreCase);
+                                
+        bool contiemBairro = !string.IsNullOrEmpty(enderecoViaCep.Bairro) && 
+                            endereco.Contains(enderecoViaCep.Bairro, StringComparison.OrdinalIgnoreCase);
+                            
+        bool contiemCidade = !string.IsNullOrEmpty(enderecoViaCep.Localidade) && 
+                            endereco.Contains(enderecoViaCep.Localidade, StringComparison.OrdinalIgnoreCase);
+                            
+        bool contiemUF = !string.IsNullOrEmpty(enderecoViaCep.Uf) && 
+                        endereco.Contains(enderecoViaCep.Uf, StringComparison.OrdinalIgnoreCase);
+
+        // Para consifderar válido, o endereço deve conter pelo menos logradouro e cidade
+        return contiemLogradouro && contiemCidade;
     }
 }

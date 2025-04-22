@@ -1,5 +1,6 @@
 ﻿using Challenge_Odontoprev_API.Models;
 using Challenge_Odontoprev_API.Repositories;
+using Challenge_Odontoprev_API.Services.APIs;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Challenge_Odontoprev_API.DTOs;
@@ -12,11 +13,16 @@ public class PacienteController : ControllerBase
 {
     private readonly _IRepository<Paciente> _repository;
     private readonly IMapper _mapper;
+    private readonly IEnderecoService _enderecoService;
 
-    public PacienteController(_IRepository<Paciente> repository, IMapper mapper)
+    public PacienteController(
+        _IRepository<Paciente> repository, 
+        IMapper mapper,
+        IEnderecoService enderecoService)
     {
         _repository = repository;
         _mapper = mapper;
+        _enderecoService = enderecoService;
     }
 
     [HttpGet]
@@ -38,6 +44,14 @@ public class PacienteController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(PacienteCreateDTO dto)
     {
+        //Validar o CEP e endereço antes de persistir
+        if (!string.IsNullOrEmpty(dto.CEP))
+        {
+            var enderecoResponse = await _enderecoService.ValidarEnderecoAsync(dto.CEP, dto.Endereco);
+            if (!enderecoResponse)
+                return BadRequest(new { Mensagem = "O endereco fornecido não é valido para o CEP informado." });
+        }
+
         var paciente = _mapper.Map<Paciente>(dto);
         await _repository.Insert(paciente);
 
@@ -55,6 +69,14 @@ public class PacienteController : ControllerBase
         if (existingPaciente == null)
             return NotFound();
 
+        //Validar o CEP e endereço antes de persistir
+        if (!string.IsNullOrEmpty(dto.CEP))
+        {
+            var enderecoResponse = await _enderecoService.ValidarEnderecoAsync(dto.CEP, dto.Endereco);
+            if (!enderecoResponse)
+                return BadRequest(new { Mensagem = "O endereco fornecido não é valido para o CEP informado." });
+        }
+
         _mapper.Map(dto, existingPaciente);
         await _repository.Update(existingPaciente);
 
@@ -66,5 +88,28 @@ public class PacienteController : ControllerBase
     {
         await _repository.Delete(id);
         return NoContent();
+    }
+
+    // Endpoint adicional para consultar endereço por CEP
+    [HttpGet("consultar-cep/{cep}")]
+    public async Task<IActionResult> ConsultarEnderecoPorCep(string cep)
+    {
+        try
+        {
+            var resultado = await _enderecoService.ConsultarCepAsync(cep);
+            if (resultado.Erro)
+            {
+                return NotFound(new { Mensagem = "CEP não encontrado." });
+            }
+            return Ok(resultado);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { Mensagem = "O CEP fornecido é inválido." });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { Mensagem = "Ocorreu um erro interno ao processar a solicitação." });
+        }
     }
 }

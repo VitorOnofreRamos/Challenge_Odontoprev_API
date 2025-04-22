@@ -29,18 +29,18 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
             var sql = @"BEGIN Pkg_Procedures_CRUD_Odontoprev.Insert_Paciente(
                                 :p_Nome, 
                                 :p_Data_Nascimento, 
-                                :p_CPF, 
-                                :p_Endereco, 
+                                :p_CPF,
                                 :p_Telefone, 
-                                :p_Carteirinha
+                                :p_Carteirinha,
+                                :p_ID_Endereco
                             ); END;";
             await _context.Database.ExecuteSqlRawAsync(sql,
                     new OracleParameter("p_Nome", paciente.Nome),
                     new OracleParameter("p_Data_Nascimento", paciente.Data_Nascimento),
                     new OracleParameter("p_CPF", paciente.CPF),
-                    new OracleParameter("p_Endereco", paciente.Endereco),
                     new OracleParameter("p_Telefone", paciente.Telefone),
-                    new OracleParameter("p_Carteirinha", paciente.Carteirinha));
+                    new OracleParameter("p_Carteirinha", paciente.Carteirinha),
+                    new OracleParameter("p_ID_Endereco", paciente.IdEndereco));
         }
         else if (entity is Dentista dentista)
         {
@@ -98,19 +98,19 @@ public class _Repository<T> : _IRepository<T> where T : _BaseEntity
                                 :p_ID_Paciente, 
                                 :p_Nome, 
                                 :p_Data_Nascimento, 
-                                :p_CPF, 
-                                :p_Endereco, 
+                                :p_CPF,
                                 :p_Telefone, 
-                                :p_Carteirinha
+                                :p_Carteirinha,
+                                :p_ID_Endereco
                             ); END;";
             await _context.Database.ExecuteSqlRawAsync(sql,
                 new OracleParameter("p_ID_Paciente", paciente.Id),
                 new OracleParameter("p_Nome", (object)paciente.Nome ?? DBNull.Value),
                 new OracleParameter("p_Data_Nascimento", paciente.Data_Nascimento),
                 new OracleParameter("p_CPF", (object)paciente.CPF ?? DBNull.Value),
-                new OracleParameter("p_Endereco", (object)paciente.Endereco ?? DBNull.Value),
                 new OracleParameter("p_Telefone", (object)paciente.Telefone ?? DBNull.Value),
-                new OracleParameter("p_Carteirinha", paciente.Carteirinha));
+                new OracleParameter("p_Carteirinha", paciente.Carteirinha),
+                new OracleParameter("p_ID_Endereco", (object)paciente.IdEndereco ?? DBNull.Value));
         }
         else if (entity is Dentista dentista)
         {

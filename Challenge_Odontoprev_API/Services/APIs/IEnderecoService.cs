@@ -5,4 +5,5 @@ namespace Challenge_Odontoprev_API.Services.APIs;
 public interface IEnderecoService
 {
     Task<EnderecoViaCepResponse> ConsultarCepAsync(string cep);
+    Task<bool> ValidarEnderecoAsync(string cep, string endereco);
 }
