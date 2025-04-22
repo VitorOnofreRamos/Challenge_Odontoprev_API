@@ -1,7 +1,7 @@
 # Challenge Odontoprev API
 
 ## Descrição
-A **Challenge Odontoprev API** é uma API REST desenvolvida em **ASP.NET Core 8.0** para gerenciar consultas odontológicas, dentistas, pacientes e histórico de atendimentos. Ela utiliza o **Entity Framework Core** com **Oracle** como banco de dados e implementa o **AutoMapper** para conversão de objetos.
+A **Challenge Odontoprev API** é uma API REST desenvolvida em **ASP.NET Core 8.0** para gerenciar consultas odontológicas, dentistas, pacientes e histórico de atendimentos. Ela utiliza o **Entity Framework Core** com **Oracle** como banco de dados realacional e implementa o **AutoMapper** para conversão de objetos, também é utilizado o **MongoDB** para o armazanamento de endereços trazidos da API externa **[ViaCEP](https://viacep.com.br/)**.
 
 Todas as operações **CRUD** (Create, Read, Update, Delete) são executadas por meio de procedures **PL/SQL**, implementadas no banco de dados **Oracle**. Essas procedures estão disponíveis no repositório [Data-Base-Odontoprev](https://github.com/VitorOnofreRamos/Data-Base-Odontoprev).
 
@@ -43,7 +43,7 @@ O projeto utiliza as seguintes dependências, conforme definidas no arquivo de p
 ## Estrutura do Projeto
 ```
 Challenge_Odontoprev_API/
-├── Controllers/           # Controladores da API
+├── Controllers/          # Controladores da API
 ├── DTOs/                 # Data Transfer Objects (DTOs)
 ├── Infraestructure/      # Configuração do banco de dados e Unit of Work
 ├── Mappings/             # Perfis do AutoMapper
@@ -66,7 +66,8 @@ cd Challenge_Odontoprev_API
 Edite o arquivo `appsettings.json` e substitua `[HOST]`, `[PORT]`, `[SERVICE_NAME]`, `[USUARIO]` e `[SENHA]` com as informações do seu banco de dados Oracle:
 ```json
 "ConnectionStrings": {
-    "OracleConnection": "Data Source=//[HOST]:[PORT]/[SERVICE_NAME];User Id=[USUARIO];Password=[SENHA];"
+    "OracleConnection": "Data Source=//[HOST]:[PORT]/[SERVICE_NAME];User Id=[USUARIO];Password=[SENHA];",
+    "MongoConnection": "mongodb://localhoast:27017"
 }
 ```
 
