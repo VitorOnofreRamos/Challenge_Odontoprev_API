@@ -3,11 +3,13 @@ using Challenge_Odontoprev_API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Challenge_Odontoprev_API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Challenge_Odontoprev_API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class HistoricoController : ControllerBase
 {
     private readonly _IRepository<HistoricoConsulta> _repository;
@@ -62,6 +64,7 @@ public class HistoricoController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(long id)
     {
         await _repository.Delete(id);

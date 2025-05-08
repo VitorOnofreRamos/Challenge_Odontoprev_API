@@ -3,11 +3,13 @@ using Challenge_Odontoprev_API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Challenge_Odontoprev_API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Challenge_Odontoprev_API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class DentistaController : ControllerBase
 {
     private readonly _IRepository<Dentista> _repository;
@@ -62,6 +64,7 @@ public class DentistaController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(long id)
     {
         await _repository.Delete(id);
