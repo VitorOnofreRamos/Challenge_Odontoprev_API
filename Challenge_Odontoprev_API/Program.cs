@@ -8,6 +8,7 @@ using Challenge_Odontoprev_API.Repositories;
 using Challenge_Odontoprev_API.Services;
 using Challenge_Odontoprev_API.Infrastructure;
 using Challenge_Odontoprev_API.Mappings;
+using Challenge_Odontoprev_API.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,6 +88,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthentication();
+
+app.UseJwtMiddleware();
 
 app.MapControllers();
 
